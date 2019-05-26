@@ -5,5 +5,5 @@ RUN  mkdir /newrelic && chown 185 /newrelic
 RUN ls -la 
 RUN pwd
 COPY * /newrelic
-RUN ${WORKSPACE}
+RUN echo ${WORKSPACE}
 USER 185
