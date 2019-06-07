@@ -47,7 +47,7 @@ spec:
               key: API_KEY
               name: newrelic-apikey
         - name: CATALINA_OPTS_APPEND
-          value: -javaagent:/mnt/newrelic/newrelic.jar
+          value: -javaagent:/newrelic/newrelic.jar
         - name: NEW_RELIC_LOG
           value: STDOUT
         image: docker-registry.default.svc:5000/sidecar-mon/example-app@sha256:475878a54b6d73379545ba8a8cad31599713bd1a21acb50474575fdad2b246e7
@@ -56,7 +56,7 @@ spec:
         ports:
         resources: {}
         volumeMounts:
-        - mountPath: /mnt/newrelic
+        - mountPath: /newrelic
           name: newrelic-volume
       dnsPolicy: ClusterFirst
       restartPolicy: Always
