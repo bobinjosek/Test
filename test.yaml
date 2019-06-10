@@ -79,7 +79,7 @@ spec:
       - example-app
       from:
         kind: ImageStreamTag
-        name: example-app:latest
+        name: IMAGE:latest
         namespace: pipeline
       
     type: ImageChange
