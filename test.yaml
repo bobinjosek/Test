@@ -71,25 +71,25 @@ spec:
       - emptyDir: {}
         name: newrelic-volume
   test: false
-  //triggers:
-  //- type: ConfigChange
-  //- imageChangeParams:
-  //    automatic: true
-  //    containerNames:
-  //    - example-app
-  //    from:
-  //      kind: ImageStreamTag
-  //      name: IMAGE:latest
-  //      namespace: pipeline
+  #triggers:
+  #- type: ConfigChange
+  #- imageChangeParams:
+  #    automatic: true
+  #    containerNames:
+  #    - example-app
+  #    from:
+  #      kind: ImageStreamTag
+  #      name: IMAGE:latest
+  #      namespace: pipeline
       
-  //  type: ImageChange
- // - imageChangeParams:
-  //    automatic: true
-  //    containerNames:
-   //   - newrelic-sidecar
-   //   from:
-   //     kind: ImageStreamTag
-   //     name: newrelic-sidecar:latest
-   //     namespace: pipeline
+  #  type: ImageChange
+ # - imageChangeParams:
+  #    automatic: true
+  #    containerNames:
+   #   - newrelic-sidecar
+   #   from:
+   #     kind: ImageStreamTag
+   #     name: newrelic-sidecar:latest
+   #     namespace: pipeline
      
-   // type: ImageChange
+   # type: ImageChange
