@@ -27,7 +27,7 @@ spec:
         deploymentconfig: example-app
     spec:
       containers:
-      - image: docker-registry.default.svc:5000/openshift/newrelic-java@sha256:e4372aa34304001da121ab78260900f1332bd5c374e84ee753819999a04a3d0a
+      - image: docker-registry.default.svc:5000/openshift/newrelic-java
         imagePullPolicy: Always
         name: newrelic-sidecar
         resources: {}
@@ -71,25 +71,25 @@ spec:
       - emptyDir: {}
         name: newrelic-volume
   test: false
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - example-app
-      from:
-        kind: ImageStreamTag
-        name: IMAGE:latest
-        namespace: pipeline
+  //triggers:
+  //- type: ConfigChange
+  //- imageChangeParams:
+  //    automatic: true
+  //    containerNames:
+  //    - example-app
+  //    from:
+  //      kind: ImageStreamTag
+  //      name: IMAGE:latest
+  //      namespace: pipeline
       
-    type: ImageChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - newrelic-sidecar
-      from:
-        kind: ImageStreamTag
-        name: newrelic-sidecar:latest
-        namespace: pipeline
+  //  type: ImageChange
+ // - imageChangeParams:
+  //    automatic: true
+  //    containerNames:
+   //   - newrelic-sidecar
+   //   from:
+   //     kind: ImageStreamTag
+   //     name: newrelic-sidecar:latest
+   //     namespace: pipeline
      
-    type: ImageChange
+   // type: ImageChange
