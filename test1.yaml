@@ -1,0 +1,83 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: jvm-newrelic
+    application: testingde
+  name: testingde
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentConfig: testingde
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jvm-newrelic
+        application: testingde
+        deploymentConfig: testingde
+      name: testingde
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/openshift/newrelic-java:latest
+        imagePullPolicy: Always
+        name: newrelic-sidecar
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /newrelic
+          name: newrelic-volume
+      - env:
+        - name: NEW_RELIC_APP_NAME
+          value: testingde
+        #- name: NEW_RELIC_LICENSE_KEY
+        #  valueFrom:
+        #    secretKeyRef:
+        #      key: API_KEY
+        #      name: newrelic-apikey
+        - name: CATALINA_OPTS_APPEND
+          value: -javaagent:/newrelic/newrelic.jar
+        - name: NEW_RELIC_LOG
+          value: STDOUT
+        
+        
+        
+        
+        
+        imagePullPolicy: Always
+        name: testingde
+        ports:
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /newrelic
+          name: newrelic-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir: {}
+        name: newrelic-volume
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - testingde
+      from:
+        kind: ImageStreamTag
+        name: IMAGE:latest
+        namespace: pipeline
+    type: ImageChange
+  - type: ConfigChange
+
