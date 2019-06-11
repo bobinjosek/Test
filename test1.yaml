@@ -25,7 +25,7 @@ spec:
       name: testingde
     spec:
       containers:
-      - image: docker-registry.default.svc:5000/openshift/newrelic-java:latest
+      - image: docker-registry.default.svc:5000/test-sidecar/newrelic-jvm:latest
         imagePullPolicy: Always
         name: newrelic-sidecar
         resources: {}
