@@ -77,7 +77,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: IMAGE:latest
-        namespace: pipeline
+        namespace: NAMESPACE
     type: ImageChange
   - type: ConfigChange
 
