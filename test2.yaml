@@ -52,7 +52,7 @@ spec:
         
         
         imagePullPolicy: Always
-        name: testingde
+        name: APP_NAME
         ports:
         resources: {}
         terminationMessagePath: /dev/termination-log
