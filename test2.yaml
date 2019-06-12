@@ -79,4 +79,4 @@ spec:
         name: IMAGE:latest
         namespace: NAMESPACE
     type: ImageChange
-- type: ConfigChange
+  - type: ConfigChange
