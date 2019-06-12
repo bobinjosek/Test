@@ -1,0 +1,82 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: jvm-newrelic
+    application: APP_NAME
+  name: APP_NAME
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentConfig: APP_NAME
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jvm-newrelic
+        application: APP_NAME
+        deploymentConfig: APP_NAME
+      name: APP_NAME
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/pipeline/newrelic-jvm:latest
+        imagePullPolicy: Always
+        name: newrelic-sidecar
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /newrelic
+          name: newrelic-volume
+      - env:
+        - name: NEW_RELIC_APP_NAME
+          value: APP_NAME
+        - name: NEW_RELIC_LICENSE_KEY
+          value: "eecfcda2c90b38c67e5f9f06a04a92b8a848e70b"
+        #    secretKeyRef:
+        #      key: API_KEY
+        #      name: newrelic-apikey
+        - name: CATALINA_OPTS_APPEND
+          value: -javaagent:/newrelic/newrelic.jar
+        - name: NEW_RELIC_LOG
+          value: STDOUT
+        
+        
+        
+        
+        
+        imagePullPolicy: Always
+        name: testingde
+        ports:
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /newrelic
+          name: newrelic-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir: {}
+        name: newrelic-volume
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - APP_NAME
+      from:
+        kind: ImageStreamTag
+        name: IMAGE:latest
+        namespace: NAMESPACE
+    type: ImageChange
+- type: ConfigChange
